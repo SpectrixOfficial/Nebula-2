@@ -17,7 +17,7 @@ Nebula is A Discord bot That Serves All Purposes, Moderation, Fun, Server Utilit
 
 ## Looks Sweet, How Can I Invite It
 
-Invite It To Your Discord Server, thats Great!, You Can Invite The Bot By Simply Going [Here](https://discordapp.com/oauth2/authorize?client_id=487164011683774464&permissions=8&scope=bot)
+Invite It To Your Discord Server, thats Great!, You Can Invite The Bot By Simply Going [Here](https://links.enternewname.me/nebula)
 
 ## Is There Any Help Or Documentation?
 
