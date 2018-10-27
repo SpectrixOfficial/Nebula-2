@@ -5,7 +5,7 @@ from time import ctime
 with open("database/data.json") as f:
     config = json.load(f)
 
-class Nebula_Bot(commands.Bot):
+class Nebula_Bot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or(config['prefix']),
                          case_insensitive=True,
