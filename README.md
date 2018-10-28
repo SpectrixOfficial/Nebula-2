@@ -10,6 +10,7 @@ A Discord Bot Created By [`discord.py`](https://discordpy.readthedocs.io/en/rewr
 * Made the bot ready for an database provider to be setup
 * Spoofied Command Designs
 * Added User Info and planning to add server info
+* Got an VPS for the bot
 
 # What Is Nebula Anyways?
 
@@ -27,11 +28,7 @@ Indeed There Is, You Can See The Website By Going Here : [https://enternewname.m
 
 Awesome, Its Nice To See Some People Helping Our Bot, you Can [Create an Issue](https://github.com/nebula-assets/Nebula/issues/new) relating to all things Nebula
 
-# Wheres The Commands?
-
-Look Below
-
-# Nebula
+# Nebula's Commands
 
 An Simple Discord Bot that has moderation for your server needs and fun commands for the 
 pleasure of anyone. To suggest features or to report bugs please join the [Support Server](https://links.enternewname.me/server)
@@ -80,7 +77,8 @@ Note: Arguments Surrounded By &lt;&gt; Are Required But Arguments With {} Are No
 
 ###### ___Note All Commands Needs To Start with `.github or .gh`___
 
-# General Commands
+# General Comm
+nds
 
 | Command | Example Input | Command Info |
 | --------|-------------| ------------|
