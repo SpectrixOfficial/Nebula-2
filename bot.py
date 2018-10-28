@@ -17,7 +17,8 @@ class Nebula_Bot(commands.AutoShardedBot):
             payload = {"server_count"  : len(self.guilds)}
             await self.change_presence(activity=discord.Activity(name=f".help in {len(self.guilds)} Servers!", url="https://www.twitch.tv/EnterNewName",type=1))
             async with aiohttp.ClientSession() as session:
-                await session.post("https://discordbots.org/bot/" + str(self.user.id) + "/stats", data=payload, headers=header)
+                await session.post("https://discordbots.org/api/bots/" + str(self.user.id) + "/stats", data=payload, headers=header)
+            print("Posted Server Count")
         except Exception as e:
             print(e)
 
