@@ -12,19 +12,14 @@ class Nebula_Bot(commands.AutoShardedBot):
                          owner_id=373256462211874836)
 
     async def presencehandler(self):
-        if config['is_on_dbl'] is True:
+        try:
             header = {"Authorization" : config["dbltoken"]}
             payload = {"server_count"  : len(self.guilds)}
+            await self.change_presence(activity=discord.Activity(name=f".help in {len(self.guilds)} Servers!", url="https://www.twitch.tv/EnterNewName",type=1))
             async with aiohttp.ClientSession() as session:
-                await session.post("https://discordbots.org/bot/" + self.user.id + "/stats",
-                                   data=payload, 
-                                   headers=header)
-                
-        await self.change_presence(
-            activity=discord.Activity(
-                name=f".help in {len(self.guilds)} Servers!",
-                url="https://www.twitch.tv/EnterNewName",
-                type=1))
+                await session.post("https://discordbots.org/bot/" + self.user.id + "/stats", data=payload, headers=header)
+        except Exception as e:
+            print(e)
 
     async def on_guild_remove(self, guild):
         await self.presencehandler()
