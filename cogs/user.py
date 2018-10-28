@@ -11,6 +11,8 @@ class UserManagement:
     @commands.command(aliases=['b'])
     async def ban(self, ctx, user : discord.Member, *, banReason=None):
         if ctx.author.id == 373256462211874836 or ctx.author == ctx.guild.owner or ctx.author.top_role > user.top_role:
+            if user == ctx.author:
+                return await ctx.send("***<:tickNo:490607198443929620> You can't ban yourself...***")
             await user.ban(reason=banReason)
             if not banReason:
                 await ctx.send(f"**<:tickYes:490607182010777620> I have banned {user} from the server**")
@@ -30,6 +32,8 @@ class UserManagement:
     @commands.command(aliases=['k'])
     async def kick(self, ctx, user : discord.Member, * ,kickReason=None):
         if ctx.author.id == 373256462211874836 or ctx.author == ctx.guild.owner or ctx.author.top_role > user.top_role:
+            if user == ctx.author:
+                return await ctx.send("***<:tickNo:490607198443929620> You can't kick yourself...***")
             await user.kick(reason=kickReason)
             if not kickReason:
                 await ctx.send(f"**<:tickYes:490607182010777620> I have kicked {user} from the server**")
@@ -46,11 +50,14 @@ class UserManagement:
                 await modlog.send(embed=embed)
             except:
                 pass
+
     @commands.has_permissions(ban_members=True, kick_members=True)
     @commands.bot_has_permissions(ban_members=True)
     @commands.command(aliases=['sb'])
     async def softban(self, ctx, user : discord.Member, *, softbanReason=None):
         if ctx.author.id == 373256462211874836 or ctx.author == ctx.guild.owner or ctx.author.top_role > user.top_role:
+            if user == ctx.author:
+                return await ctx.send("***<:tickNo:490607198443929620> You can't softban yourself...***")
             await user.ban(reason=softbanReason)
             await user.unban()
             if not softbanReason:
