@@ -81,8 +81,7 @@ class Developers:
         if process.stdout.decode('utf-8') == '':
             return
         await ctx.send(f"```bash\n{process.stdout.decode('utf-8')}\n```")
-
-
+       
     @commands.command(aliases=['rl'])
     async def reload(self, ctx, cog=None):
         cogs = config['cogs']
@@ -94,7 +93,6 @@ class Developers:
                 return await ctx.send(embed=discord.Embed(color=discord.Color.green(), description=f"Successfully Reloaded {len(cogs)} Cogs {config['tickyes']}"))            
             except Exception as e:
                 return await ctx.send(embed=discord.Embed(description=f"Could Not Reload {len(module)} Cogs {config['tickno']}\n```bash\n{e}\n```", color=discord.Color.red()))
-
         try:
             self.bot.unload_extension(f"cogs.{cog}")
             self.bot.load_extension(f"cogs.{cog}")
@@ -102,7 +100,6 @@ class Developers:
         except Exception as e:
             await ctx.send(embed=discord.Embed(description=f"Could Not Reload `cogs.{cog}` {config['tickno']}\n```bash\n{e}\n```", color=discord.Color.red()))
 
-    
     @commands.command(aliases=['l'])
     async def load(self, ctx, cog):
         try:
@@ -118,15 +115,15 @@ class Developers:
 
     @commands.group(invoke_without_command=True)
     async def dt(self, ctx):
-        await ctx.send("Developer Tools For Use Of the Bot In General")
+        pass
 
     @dt.command(aliases=['p'])
     async def presence(self, ctx, typ : int, *, presencegame=None):
         if presencegame is None:
-            await self.bot.change_presence(activity=discord.Activity(name=f".help in {len(self.bot.guilds)} Servers", url="https://www.twitch.tv/Enter%20New%20Name", type=1))
+            await self.bot.change_presence(activity=discord.Activity(name=f".help in {len(self.bot.guilds)} Servers!", url="https://www.twitch.tv/Enter%20New%20Name", type=1))
             await ctx.send(f"Changed Presence to `Default Presence`")
         else:
-            await self.bot.change_presence(activity=discord.Activity(name=f"{presencegame} | {len(self.bot.guilds)} Guilds!", type=typ, url="https://www.twitch.tv/Enter%20New%20Name"))
+            await self.bot.change_presence(activity=discord.Activity(name=f"{presencegame} in {len(self.bot.guilds)} Servers!", type=typ, url="https://www.twitch.tv/Enter%20New%20Name"))
             if typ == 0:
                 typtype = "Playing"
             elif typ == 1:
@@ -154,16 +151,6 @@ class Developers:
             await ctx.message.delete()
         except:
             pass
-
-    @commands.command()
-    async def test(self, ctx):
-        embed = discord.Embed(color=discord.Color(value=0x1c407a))
-        embed.set_author(name="Thanks For Inviting Nebula")
-        embed.add_field(name="My Prefix is `.`", value=f"[Support](https://enternewname.me/redirects/support)", inline=False)
-        embed.add_field(name="Need Help?", value="[Click here](https://enternewname.me/nebula/commands)", inline=False)
-        embed.add_field(name="Logging Channel Requirement", value="***#mod-log***", inline=False)
-        embed.add_field(name="Other Requirements:", value="Make Sure I have `external_emojis` so i can use my emojis\nfrom my [Support Server](https://enternewname.me/redirects/support)")
-        await ctx.guild.system_channel.send(embed=embed)    
         
 def setup(bot):
     bot.add_cog(Developers(bot))
