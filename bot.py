@@ -16,7 +16,7 @@ class Nebula_Bot(commands.AutoShardedBot):
             header = {"Authorization" : config["dbltoken"]}
             payload = {"server_count"  : len(self.guilds)}
             async with aiohttp.ClientSession() as session:
-                await session.post("https://discordbots.org/bot/487164011683774464/stats",
+                await session.post("https://discordbots.org/bot/" + self.user.id + "/stats",
                                    data=payload, 
                                    headers=header)
                 
