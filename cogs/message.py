@@ -38,11 +38,5 @@ class MessageManagement:
             await ctx.channel.edit(slowmode_delay=(seconds))
             await ctx.send(f"**Channel is On Slowmode for `{seconds}` {numofmessages} {config['tickyes']}\nTo Turn Off, Just Do `.slowmode`**")
 
-    @commands.is_owner()
-    @commands.command()
-    async def say(self, ctx, * , body :str):
-        await ctx.message.delete()
-        await ctx.send(body)
-
 def setup(bot):
     bot.add_cog(MessageManagement(bot))
