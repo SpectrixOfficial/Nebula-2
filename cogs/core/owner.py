@@ -11,7 +11,6 @@ class Developers:
         self.bot = bot
         self._last_result = None
         self.sessions = set()
-        self.db = self.bot.db
 
     def cleanup_code(self, message):
         if message.startswith('```') and message.startswith("```"):

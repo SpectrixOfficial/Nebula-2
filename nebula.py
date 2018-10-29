@@ -15,7 +15,7 @@ with open("database/data.json") as f:
 
 
 class Nebula_Bot(commands.Bot):
-    def __init__(self, **kwargs):
+    def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or(config['prefix']),
                          case_insensitive=True,
                          owner_id=373256462211874836
