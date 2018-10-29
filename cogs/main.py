@@ -28,7 +28,7 @@ class MainCommands:
 
     @commands.command()
     async def prefix(self, ctx):
-        if self.bot.user.is_mentioned:
+        if self.bot.user.mentioned_in(ctx.message):
             return await ctx.send("**Prefix is `.`**")
         else:
             pass
