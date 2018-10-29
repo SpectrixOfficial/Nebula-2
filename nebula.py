@@ -53,7 +53,7 @@ class Nebula_Bot(commands.Bot):
         print("Discord.py Version : {}".format(pkg_resources.get_distribution("discord.py").version))
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
-        bot.pool = await self.database_provider()
+        self.pool = await self.database_provider()
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
@@ -64,7 +64,7 @@ class Nebula_Bot(commands.Bot):
             embed.add_field(name="Need Help?", value="[Click here](https://enternewname.me/nebula/commands)", inline=False)
             embed.add_field(name="Logging Channel Requirement", value="***#mod-log***", inline=False)
             embed.set_footer(text=f"Thanks to you, I am now on {len(self.guilds)} servers, HYPE!", icon_url=self.user.avatar_url)
-            bot.pool.execute('select * from *')
+            self.pool.execute('select * from *')
             await guild.system_channel.send(embed=embed)
         except:
             pass
