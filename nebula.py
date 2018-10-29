@@ -12,18 +12,16 @@ from time import ctime
 with open("database/data.json") as f:
     config = json.load(f)
 
+async def create_pool():
+    creds = {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
+    pool = await asyncpg.create_pool(**creds, max_size=100)
+    return pool
+
 class Nebula_Bot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or(config['prefix']),
                          case_insensitive=True,
                          owner_id=373256462211874836)
-
-    
-    async def create_pool(self):
-        creds = {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
-        pool = await asyncpg.create_pool(**creds, max_size=100)
-        return pool
-
 
     async def presencehandler(self):
         try:
@@ -51,7 +49,8 @@ class Nebula_Bot(commands.Bot):
         print("Discord.py Version : {}".format(pkg_resources.get_distribution("discord.py").version))
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
-        self.db = await self.create_pool()
+        db = await create_pool()
+        db.commit()
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
