@@ -21,7 +21,7 @@ class Nebula_Bot(commands.Bot):
                          owner_id=373256462211874836
         )
 
-
+    # not in use rn
     async def database_provider(self):
         creds = {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
         db = await asyncpg.create_pool(**creds)
@@ -53,7 +53,6 @@ class Nebula_Bot(commands.Bot):
         print("Discord.py Version : {}".format(pkg_resources.get_distribution("discord.py").version))
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
-        self.pool = await self.database_provider()
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
@@ -64,7 +63,6 @@ class Nebula_Bot(commands.Bot):
             embed.add_field(name="Need Help?", value="[Click here](https://enternewname.me/nebula/commands)", inline=False)
             embed.add_field(name="Logging Channel Requirement", value="***#mod-log***", inline=False)
             embed.set_footer(text=f"Thanks to you, I am now on {len(self.guilds)} servers, HYPE!", icon_url=self.user.avatar_url)
-            self.pool.execute('select * from *')
             await guild.system_channel.send(embed=embed)
         except:
             pass
