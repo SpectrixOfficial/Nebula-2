@@ -26,7 +26,7 @@ class MainCommands:
             except:
                 await ctx.send("**Here's my website**\nhttps://enternewname.me/nebula/commands")
 
-    @commands.command(aliases='<@501191721456107531>')
+    @commands.command(aliases=['<@501191721456107531>'])
     async def prefix(self, ctx):
         if self.bot.user.mentioned_in(ctx.message):
             return await ctx.send("**Prefix is `.`**")
