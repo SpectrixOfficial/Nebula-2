@@ -50,7 +50,6 @@ class Nebula_Bot(commands.Bot):
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
         db = await create_pool()
-        db.commit()
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
