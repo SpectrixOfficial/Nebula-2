@@ -38,9 +38,6 @@ class Nebula_Bot(commands.Bot):
         pool = await asyncpg.create_pool(**credentials)
         return pool
 
-    async def on_guild_remove(self, guild):
-        await self.presencehandler()
-
     async def on_ready(self):
         await self.presencehandler()
         print("Bot Is Successfully Connected")
@@ -48,10 +45,15 @@ class Nebula_Bot(commands.Bot):
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
         db = await self.db()
-        bot.pool = db
+        self.pool = db
+
+    async def on_guild_remove(self, guild):
+        await self.presencehandler()
+        await self.pool.execute("DROP TABLE $1", guild.id)
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
+        await self.pool.execute("CREATE TABLE $1 (prefix TEXT, logs TEXT)", guild.id)
         try:
             embed = discord.Embed(color=discord.Color(value=0x1c407a))
             embed.set_author(name="Thanks For Inviting Nebula")
@@ -63,7 +65,6 @@ class Nebula_Bot(commands.Bot):
         except:
             pass
            
-
     def intiate_startup(self):
         self.remove_command('help')
         cogs = config["cogs"]
