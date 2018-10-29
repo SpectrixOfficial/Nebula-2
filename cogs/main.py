@@ -93,25 +93,22 @@ class MainCommands:
 
     @commands.command()
     async def stats(self, ctx):
-        try:
-            file = open('database/uptime.json', "r")
-            time = json.load(file)['uptimestats']
-            uptimeraw = datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S.%f")
-            uptime = datetime.datetime.utcnow() - uptimeraw
-            hours, remainder = divmod(int(uptime.total_seconds()), 3600)
-            minutes, seconds = divmod(remainder, 60)
-            days, hours = divmod(hours, 24)
-            users = 0
-            channels_seen = str(len(set(self.bot.get_all_channels())))
-            for i in self.bot.guilds:
-                users+= len(i.members)
-            embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
-            embed.set_author(url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name} Info")
-            embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
-            embed.add_field(name="Statisics:", value=f"\nI am on {len(self.bot.guilds)} servers,\nI see {channels_seen} Channels\nI listen to {users}")
-        except Exception as e:
-            print(e)
-            
+        file = open('database/uptime.json', "r")
+        time = json.load(file)['uptimestats']
+        uptimeraw = datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S.%f")
+        uptime = datetime.datetime.utcnow() - uptimeraw
+        hours, remainder = divmod(int(uptime.total_seconds()), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        days, hours = divmod(hours, 24)
+        users = 0
+        channels_seen = str(len(set(self.bot.get_all_channels())))
+        for i in self.bot.guilds:
+            users+= len(i.members)
+        embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
+        embed.set_author(url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name} Info")
+        embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
+        embed.add_field(name="Statisics:", value=f"\nI am on {len(self.bot.guilds)} servers,\nI see {channels_seen} Channels\nI listen to {users}")
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def uptime(self, ctx):
