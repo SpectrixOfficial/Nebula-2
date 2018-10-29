@@ -2,8 +2,9 @@
 
 A Discord Bot Created By [`discord.py`](https://discordpy.readthedocs.io/en/rewrite/api.html) and Maintained And Owned By [@EnterNewName](https://github.com/EnterNewName)
 
+<div>
 [![Discord Bots](https://discordbots.org/api/widget/501191721456107531.svg)](https://discordbots.org/bot/501191721456107531)
-
+</div>
 ## New Updates
 
 * Made Performance Faster

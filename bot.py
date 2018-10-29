@@ -15,11 +15,16 @@ class Nebula_Bot(commands.AutoShardedBot):
     async def presencehandler(self):
         try:
             await self.change_presence(activity=discord.Activity(name=f".help in {len(self.guilds)} Servers!", url="https://www.twitch.tv/EnterNewName",type=1))
+            # bot listing server count updates
             async with aiohttp.ClientSession() as session:
-                header = {"Authorization" : config["dbltoken"]}
-                payload = {"server_count"  : len(self.guilds)}
-                baseurl = "https://discordbots.org/api/bots/501191721456107531/stats"
-                await session.post(baseurl, data=payload, headers=header)
+                dblheader = {"Authorization" : config["dbltoken"]}
+                dblpayload = {"server_count"  : len(self.guilds)}
+                dblurl = "https://discordbots.org/api/bots/" + str(self.user.id) + "/stats"
+                await session.post(dblurl, data=dblpayload, headers=dblheader)
+                dbgheader = {"Authorization" : config['dbgtoken']}
+                dbgpayload = {'count' : len(self.guilds)}
+                dbgurl ="https://discordbots.group/api/bot/" + str(self.user.id)
+                await session.post(dbgurl, data=dbgpayload, headers=dbgheader)
             print("Posted Server Count")
         except Exception as e:
             print(e)
@@ -42,8 +47,7 @@ class Nebula_Bot(commands.AutoShardedBot):
             embed.add_field(name="My Prefix is `.`", value=f"[Support](https://links.enternewname.me/nebula)", inline=False)
             embed.add_field(name="Need Help?", value="[Click here](https://enternewname.me/nebula/commands)", inline=False)
             embed.add_field(name="Logging Channel Requirement", value="***#mod-log***", inline=False)
-            embed.add_field(name="Other Requirements:", value="Make Sure I have `external_emojis` so i can use my emojis\n\
-                                                               from my [Support Server](https://links.enternewname.me/server)")
+            embed.set_footer(text=f"Thanks to you, I am now on {len(self.guilds)} servers, HYPE!", icon_url=self.user.avatar_url)
             await guild.system_channel.send(embed=embed)
         except:
             pass
@@ -56,10 +60,10 @@ class Nebula_Bot(commands.AutoShardedBot):
             for module in cogs:
                 self.load_extension(module)
                 print(f"\nLoading Extension {module}")
-            print("\nConnecting To The API")
+            print("\nConnecting To The API\n")
             super().run(config["bottoken"])
         except Exception as e:
-            print(f"Internal Error While Booting Bot:\n\n{e}\n")
+            print(f"\nInternal Error While Booting Bot:\n\n{e}\n")
 
 if __name__ == "__main__":
     Nebula_Bot().intiate_startup()

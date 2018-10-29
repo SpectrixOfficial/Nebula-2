@@ -1,4 +1,4 @@
-import discord, asyncio, json, time, datetime 
+import discord, asyncio, json, time, datetime, psutil
 from time import ctime
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
@@ -29,7 +29,7 @@ class MainCommands:
     @commands.command()
     async def prefix(self, ctx):
         if self.bot.user.mentioned_in(ctx.message):
-            return await ctx.send("**Prefix is `.`**")
+            await ctx.send("**Prefix is `.`**")
         else:
             pass
 
@@ -77,23 +77,6 @@ class MainCommands:
             except:
                 await ctx.send("**Here's my invite**\nhttps://links.enternewname.me/nebula")
 
-    @commands.guild_only()
-    @commands.command()
-    async def feedback(self, ctx, *, body : str):
-        try:
-            feedback = self.bot.get_channel(490608601950322702)
-            embed = discord.Embed(color=discord.Color(value=0xBD5BF))
-            embed.set_author(name="Feedback")
-            embed.add_field(name="Guild ID And Name: ", value=f"ID: {ctx.guild.id}, Name: {ctx.guild}", inline=False)
-            embed.add_field(name="User", value=f"Name: {ctx.author}, ID: {ctx.author.id}", inline=False)
-            embed.add_field(name="Channel ID And Name", value=f"ID: {ctx.channel.id}, Name: #{ctx.channel}", inline=False)
-            embed.add_field(name="Response: ", value=body, inline=True)
-            await feedback.send(embed=embed)
-            await ctx.send("**Your Response Has Been Sent, You Might Recieve A Response Later On**")
-        except Exception as e:
-            await ctx.send(f"***Your Feedback Could Not Be Sent {config['tickno']}, Notifying Owner***")
-            owner = self.bot.get_user(373256462211874836)
-            await owner.send(f"{owner}, We Have A Problem With The Feedback Command,\nAuthor Profile: {ctx.author.id}\nName: {ctx.author}\nHeres The Error:\n```fix\n{e}\n```")
 
     @commands.has_permissions(manage_channels=True)
     @commands.guild_only()
@@ -107,6 +90,26 @@ class MainCommands:
             await ctx.message.delete()
         except:
             pass
+
+    @commands.command()
+    async def stats(self, ctx):
+        file = open('database/uptime.json', "r")
+        time = json.load(file)['uptimestats']
+        uptimeraw = datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S.%f")
+        uptime = datetime.datetime.utcnow() - uptimeraw
+        hours, remainder = divmod(int(uptime.total_seconds()), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        days, hours = divmod(hours, 24)
+        users = 0
+        channels_seen = str(len(set(self.bot.get_all_channels())))
+        for i in self.bot.guilds:
+            users+= len(i.members)
+        embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
+        embed.set_author(url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name} Info")
+        embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\n\
+        Used {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
+        embed.add_field(name="Statisics:", value=f"\nI am on {len(self.bot.guilds)} servers,\nI see {channels_seen} Channels\nI listen to {users}")
+        
 
     @commands.command()
     async def uptime(self, ctx):
