@@ -12,20 +12,9 @@ from time import ctime
 with open("database/data.json") as f:
     config = json.load(f)
 
-
-
 class Nebula_Bot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or(config['prefix']),
-                         case_insensitive=True,
-                         owner_id=373256462211874836
-        )
-
-    # not in use rn
-    async def database_provider(self):
-        creds = {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
-        db = await asyncpg.create_pool(**creds)
-        return db
+        super().__init__(command_prefix=commands.when_mentioned_or(config['prefix']), case_insensitive=True, owner_id=373256462211874836)
 
     async def presencehandler(self):
         try:
@@ -43,6 +32,11 @@ class Nebula_Bot(commands.Bot):
             print("Posted Server Count")
         except Exception as e:
             print(e)
+
+    async def db(self):
+        print("Performing")
+        credentials =  {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
+        await asyncpg.create_pool(**credentials)
 
     async def on_guild_remove(self, guild):
         await self.presencehandler()
