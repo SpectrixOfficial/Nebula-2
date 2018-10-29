@@ -5,11 +5,6 @@ from discord.ext.commands.cooldowns import BucketType
 
 with open('database/data.json') as file:
     config = json.load(file)
-
-async def get(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as jsonresp:
-            return await jsonresp.json()
             
 class MainCommands:
     def __init__(self, bot):
@@ -114,7 +109,7 @@ class MainCommands:
         embed.set_thumbnail(url=config['urls']['runtimeicon'])
         embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
         embed.add_field(name="Statistics:", value=f"\nI am on **{len(self.bot.guilds)}** servers,\nI see **{channels_seen}** Channels\nI listen to **{users}** users")
-        embed.add_field(name="Latest Update:", value="```fixed\n[No Recent Update]\n```")
+        embed.add_field(name="Latest Update:", value="```fix\n[No Recent Update]\n```")
         await ctx.send(embed=embed)
 
     @commands.command()
