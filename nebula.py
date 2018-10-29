@@ -51,8 +51,7 @@ class Nebula_Bot(commands.Bot):
         print("Discord.py Version : {}".format(pkg_resources.get_distribution("discord.py").version))
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
-        db = await self.create_pool()
-        bot.db = db
+        self.db = await self.create_pool()
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
