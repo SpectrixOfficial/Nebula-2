@@ -11,6 +11,7 @@ class Nebula_Bot(commands.AutoShardedBot):
                          case_insensitive=True,
                          owner_id=373256462211874836)
 
+
     async def presencehandler(self):
         try:
             await self.change_presence(activity=discord.Activity(name=f".help in {len(self.guilds)} Servers!", url="https://www.twitch.tv/EnterNewName",type=1))

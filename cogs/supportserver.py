@@ -48,7 +48,6 @@ class Support:
                 await ctx.author.send(f"***{config['tickyes']} Your Suggestion Has Been Successfully Sent***")
             except:
                 pass
-                
 
 def setup(bot):
     bot.add_cog(Support(bot))
