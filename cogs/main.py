@@ -22,13 +22,13 @@ class MainCommands:
         else:
             try:
                 await ctx.author.send("**Here's my website**\nhttps://enternewname.me/nebula/commands")
-                await ctx.send("***Check Your DMs For Help***")
+                await ctx.send("***:mailbox_with_mail: Check Your DMs For Help***")
             except:
                 await ctx.send("**Here's my website**\nhttps://enternewname.me/nebula/commands")
 
     @commands.command()
     async def prefix(self, ctx):
-        await ctx.send("My Prefix is `.` and Cannot Be Changed")
+        await ctx.send("**Prefix is `.`**")
         
     @commands.cooldown(1, 20, BucketType.channel)
     @commands.command()
