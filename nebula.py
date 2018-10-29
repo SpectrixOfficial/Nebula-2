@@ -5,6 +5,7 @@ import time
 import datetime 
 import aiohttp 
 import sys
+import asyncpg
 from discord.ext import commands
 from time import ctime
 
