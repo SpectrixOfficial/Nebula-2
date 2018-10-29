@@ -6,10 +6,7 @@ from discord.ext.commands.cooldowns import BucketType
 with open('database/data.json') as file:
     config = json.load(file)
 
-async def get(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as jsonresp:
-            return await jsonresp.json()
+
 
 class MainCommands:
     def __init__(self, bot):
@@ -96,6 +93,11 @@ class MainCommands:
         except:
             pass
 
+    async def get(self, url):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as jsonresp:
+                return await jsonresp.json()
+
     @commands.command()
     async def stats(self, ctx):
         file = open('database/uptime.json', "r")
@@ -110,8 +112,8 @@ class MainCommands:
         for i in self.bot.guilds:
             users+= len(i.members)
         gh = 'https://api.github.com/repos/EnterNewName/Nebula/commits'
-        sha = await get(gh)[0]['sha']
-        lcm = await get(gh)[0]['message']
+        sha = await self.get(gh)[0]['sha']
+        lcm = await self.get(gh)[0]['message']
         embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
         embed.set_author(icon_url=self.bot.user.avatar_url, url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name}'s Info")
         embed.set_thumbnail(url=config['urls']['runtimeicon'])
