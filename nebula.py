@@ -34,9 +34,9 @@ class Nebula_Bot(commands.Bot):
             print(e)
 
     async def db(self):
-        print("Performing")
         credentials =  {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
-        return await asyncpg.create_pool(**credentials)
+        pool = await asyncpg.create_pool(**credentials)
+        return pool
 
     async def on_guild_remove(self, guild):
         await self.presencehandler()
@@ -47,6 +47,8 @@ class Nebula_Bot(commands.Bot):
         print("Discord.py Version : {}".format(pkg_resources.get_distribution("discord.py").version))
         print(f"{self.user} Is Online")
         print(f"Guild Count : {len(self.guilds)}\n")
+        db = await self.db()
+        bot.pool = db
 
     async def on_guild_join(self, guild):
         await self.presencehandler()         
