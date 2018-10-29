@@ -28,7 +28,11 @@ class MainCommands:
 
     @commands.command()
     async def prefix(self, ctx):
-        await ctx.send("**Prefix is `.`**")
+        if self.bot.user.is_mentioned:
+            return await ctx.send("**Prefix is `.`**")
+        else:
+            pass
+
         
     @commands.cooldown(1, 20, BucketType.channel)
     @commands.command()
