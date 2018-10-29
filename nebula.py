@@ -36,7 +36,7 @@ class Nebula_Bot(commands.Bot):
     async def db(self):
         print("Performing")
         credentials =  {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
-        await asyncpg.create_pool(**credentials)
+        return await asyncpg.create_pool(**credentials)
 
     async def on_guild_remove(self, guild):
         await self.presencehandler()
