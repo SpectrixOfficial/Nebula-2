@@ -110,12 +110,14 @@ class MainCommands:
         for i in self.bot.guilds:
             users+= len(i.members)
         gh = 'https://api.github.com/repos/EnterNewName/Nebula/commits'
+        sha = await get(gh)[0]['sha']
+        lcm = await get(gh)[0]['message']
         embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
         embed.set_author(icon_url=self.bot.user.avatar_url, url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name}'s Info")
         embed.set_thumbnail(url=config['urls']['runtimeicon'])
         embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
         embed.add_field(name="Statistics:", value=f"\nI am on **{len(self.bot.guilds)}** servers,\nI see **{channels_seen}** Channels\nI listen to **{users}** users")
-        embed.add_field(name="Latest Update:", value="```fixed\n{" + str(await get(gh)['sha'][0:6]) + "}\n" + str(await get(gh)['message']) + '\n```')
+        embed.add_field(name="Latest Update:", value="```fixed\n[" + sha[0:6] + "]\n" + lcm + '\n```')
         await ctx.send(embed=embed)
 
     @commands.command()
