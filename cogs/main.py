@@ -106,8 +106,7 @@ class MainCommands:
             users+= len(i.members)
         embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
         embed.set_author(url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name} Info")
-        embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\n\
-        Used {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
+        embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
         embed.add_field(name="Statisics:", value=f"\nI am on {len(self.bot.guilds)} servers,\nI see {channels_seen} Channels\nI listen to {users}")
         
 
