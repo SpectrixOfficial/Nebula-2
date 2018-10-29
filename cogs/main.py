@@ -1,4 +1,4 @@
-import discord, asyncio, json, time, datetime, psutil, aiohttp
+import discord, asyncio, json, time, datetime, psutil
 from time import ctime
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
@@ -6,8 +6,11 @@ from discord.ext.commands.cooldowns import BucketType
 with open('database/data.json') as file:
     config = json.load(file)
 
-
-
+async def get(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as jsonresp:
+            return await jsonresp.json()
+            
 class MainCommands:
     def __init__(self, bot):
         self.bot = bot
@@ -93,8 +96,6 @@ class MainCommands:
         except:
             pass
 
-
-
     @commands.command()
     async def stats(self, ctx):
         file = open('database/uptime.json', "r")
@@ -104,21 +105,17 @@ class MainCommands:
         hours, remainder = divmod(int(uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://api.github.com/repos/EnterNewName/Nebula/commits') as jsonresp:
-                users = 0
-                channels_seen = str(len(set(self.bot.get_all_channels())))
-                for i in self.bot.guilds:
-                    users+= len(i.members)
-                sha = jsonresp['sha']
-                lcm = jsonresp['message']
-                embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
-                embed.set_author(icon_url=self.bot.user.avatar_url, url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name}'s Info")
-                embed.set_thumbnail(url=config['urls']['runtimeicon'])
-                embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
-                embed.add_field(name="Statistics:", value=f"\nI am on **{len(self.bot.guilds)}** servers,\nI see **{channels_seen}** Channels\nI listen to **{users}** users")
-                embed.add_field(name="Latest Update:", value="```fixed\n[" + sha[0:6] + "]\n" + lcm + '\n```')
-                await ctx.send(embed=embed)
+        users = 0
+        channels_seen = str(len(set(self.bot.get_all_channels())))
+        for i in self.bot.guilds:
+            users+= len(i.members)
+        embed = discord.Embed(description="Runtime, Statistics, and Performance",color=discord.Color(value=0xBD5BFF))
+        embed.set_author(icon_url=self.bot.user.avatar_url, url="https://discordbots.org/bots/" + str(self.bot.user.id), name=f"{self.bot.user.name}'s Info")
+        embed.set_thumbnail(url=config['urls']['runtimeicon'])
+        embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
+        embed.add_field(name="Statistics:", value=f"\nI am on **{len(self.bot.guilds)}** servers,\nI see **{channels_seen}** Channels\nI listen to **{users}** users")
+        embed.add_field(name="Latest Update:", value="```fixed\n[No Recent Update]\n```")
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def uptime(self, ctx):
