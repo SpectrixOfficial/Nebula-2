@@ -109,7 +109,8 @@ class MainCommands:
         embed.set_thumbnail(url=config['urls']['runtimeicon'])
         embed.add_field(name="Runtime:", value=f'\nUsing {psutil.virtual_memory()[2]}% of my available memory.\nUsed {psutil.cpu_percent()}% of my CPU\nBeen Running For **{days}** days, **{hours}** hours, **{minutes}** minutes, and **{seconds}** seconds')
         embed.add_field(name="Statistics:", value=f"\nI am on **{len(self.bot.guilds)}** servers,\nI see **{channels_seen}** Channels\nI listen to **{users}** users")
-        embed.add_field(name="Latest Update:", value="```fix\n[No Recent Update]\n```")
+        update = await self.bot.pool.fect()
+        embed.add_field(name="Latest Update:", value=f"```fix\n{update}\n```")
         await ctx.send(embed=embed)
 
     @commands.command()
