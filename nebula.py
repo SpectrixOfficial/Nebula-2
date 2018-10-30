@@ -1,11 +1,4 @@
-import discord, asyncio
-import json
-import pkg_resources 
-import time 
-import datetime 
-import aiohttp 
-import sys
-import asyncpg
+import discord, asyncio, json, pkg_resources, time, datetime, aiohttp, sys, asyncpg
 from discord.ext import commands
 from time import ctime
 
@@ -31,7 +24,7 @@ class Nebula_Bot(commands.Bot):
                 await session.post(dbgurl, data=dbgpayload, headers=dbgheader)
             print("Posted Server Count")
         except Exception as e:
-            print(e)
+            print(f"Error with presence handler! {e})
 
     async def db(self):
         credentials =  {"user" : config['dbuser'], "password" : config['dbpw'], "database" : config['dbname'], "host": "127.0.0.1"}
